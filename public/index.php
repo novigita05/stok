@@ -32,6 +32,17 @@ chdir(__DIR__);
 require $pathsPath;
 $paths = new Config\Paths();
 
+$directory_app = str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
+$is_local = (strpos($_SERVER["HTTP_HOST"], '127.0.0.1') == 0 || strpos($_SERVER["HTTP_HOST"], 'localhost:8000') == 0);
+
+$directory_app = str_replace('public/', '', $directory_app);
+define('TYPE_CONNECTION', $is_local  ? "http" : "https");
+
+define('ENVIRONMENT', 'development');
+
+
+define('DIRECTORY_APP', $directory_app);
+define('base_url', TYPE_CONNECTION. "://" . $_SERVER['HTTP_HOST'] . '/');
 // Location of the framework bootstrap file.
 $app = require rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php';
 

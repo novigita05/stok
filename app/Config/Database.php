@@ -30,10 +30,10 @@ class Database extends \CodeIgniter\Database\Config
 	 * @var array
 	 */
 	public $default = [
-		'DSN'      => '',
-		'hostname' => 'localhost',
-		'username' => 'root',
-		'password' => '',
+		'DSN'      => '',		
+		'hostname' => '45.32.113.217',
+		'username' => 'ppdb',
+		'password' => '0peratorppdb765',
 		'database' => 'stok',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',

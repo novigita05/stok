@@ -29,7 +29,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = [];
+	protected $helpers = ['primary_helper'];
 	protected $db;
 	protected $session;
 	/**
@@ -40,6 +40,7 @@ class BaseController extends Controller
 		// Do Not Edit This Line
 		$this->db = Database::connect();
 		$this->session = Services::session();
+        $this->request = $request;
 		parent::initController($request, $response, $logger);
 
 		//--------------------------------------------------------------------
