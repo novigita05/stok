@@ -8,53 +8,54 @@ use Config\Services;
 use App\Models\Brand_model;
 
 class Brand extends BaseController {
-    
 
     public function index() {
         $model = new Brand_model();
 
-        $data = [
-            'brand' => $model->getBrand()
-        ];
-
-        echo view('brand/brand',$data);
+        $data = array(
+            'brand' => $model->getBrand(),
+            'menu' => 'brand',
+            'view' => 'pages/brand',
+        );
+        view_page($data);
     }
-
-    public function create() {
-        helper('brand/form');
-
-        echo view('brand/form');
-    }
-
-    public function store() {
-        helper ('form');
-
-        $model = new Brand_model();
-
-        DB::table('brand')->insert([
-            'brand' => $request->brand
-        ]);
-
-        return redirect('brand/brand');
-    }
-
-    public function edit($id = null) {
-        $model = new Brand_model();
-
-        $data['brand'] = $model->getBrand($id);
-        
-        echo view('brand/edit',$data);
-    }
-
-    public function delete($id = null) {
-        $model = new Brand_model();
-        $model->delete($id);
-
-        return redirect()->to(base_url('brand'));
-    }
-    public function tes()
+    public function get_json()
     {
-        return redirect()->to(base_url('brand'));
+        header('Content-Type:application/json');
+        $list = $this->db->table('brand')->get()->getResult();
+        $data = array();
+        $content = array();
+        foreach($list as $key => $value){
+            $data['id_brand'] = $value->id_brand;
+            $data['brand'] = $value->brand;
         
+            $edit = '<button type="button" class="btn btn-icon btn-primary mr-1" onclick="load_modal(`ubah`,`brand`, `'.$value->id_brand.'`, ``)">edit</button>';
+            $hapus = '<button type="button" class="btn btn-icon btn-danger mr-1" onclick="load_modal(`hapus`, `brand`, `'.$value->id_brand.'`, `'.$value->brand.'`)">delete</button>';
+        
+            $data['aksi'] = $edit.$hapus;
+            array_push($content, $data);
+        }
+        echo json_encode($content);
+    }
+    public function cu_brand()
+    {
+        $id = $this->request->getPost('id');
+        $data = $this->request->getPost();
+        $arr = array();
+        foreach ($data as $key => $value) {
+            if ($value!=="") {
+                $arr[$key] = $value;
+            }
+        }
+        if ($id!==null || $id!=="") {
+            $this->db->table('brand')->insert($arr);
+        }else{
+            $this->db->table('brand')->update($arr,'id_brand = '.$id);
+        }
+        if ($this->db->affectedRows() > 0) {
+            echo "sukses";
+        }else{
+            echo "gagal";
+        }
     }
 }
