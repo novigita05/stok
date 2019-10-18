@@ -10,7 +10,6 @@ use App\Models\User_model;
 class Login extends BaseController {
 
 	public function index($error = NULL) {
-		$model = new User_model();
 
 		$data = array(
 			'error' => $error
@@ -20,27 +19,29 @@ class Login extends BaseController {
 	}
 
 	public function login() {
-		$model = new User_model();
-		$login = $this->$model->login($this->input->post('username'), md5($this->input->post('password')));
-		if ($login == 1) {
-			$row = $this->User_model->data_login($this->input->post('username'), md5($this->input->post('password')));
+		$login = $this->db->table('karyawan')
+						  ->where('username',$this->request->getPost('username'))
+						  ->where('password',md5($this->request->getPost('password')))
+						  ->get()->getRow();
+
+		if ($login !== null) {
 			$data = array(
 				'logged' => TRUE,
-				'username' => $row->username
+				'username' => $login->username
 			);
 
-			$this->session->set_underdata($data);
-			redirect(site_url('layout'));
+			$this->session->set($data);
+            return redirect()->to(base_url('home'));
 		}else{
 			$error = 'username / password salah';
-			$this->index($error);
+            return redirect()->to(base_url('login'));
+
 		}
 	}
 
 	function logout() {
-		$this->session->sess_destroy();
-
-		redirect(site_url('login'));
+        session_destroy();
+        return redirect()->to(base_url('login'));
 	}
 
 }

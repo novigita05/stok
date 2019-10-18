@@ -10,6 +10,11 @@ use App\Models\Kategori_model;
 class Kategori extends BaseController {
 
     public function index() {
+        if ($this->session->get('logged')!==TRUE) {
+            $url = base_url('login');
+            header("Location: $url");
+            exit(0);
+        }
         $model = new Kategori_model();
 
         $data = array(

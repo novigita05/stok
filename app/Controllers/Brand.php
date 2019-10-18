@@ -10,6 +10,11 @@ use App\Models\Brand_model;
 class Brand extends BaseController {
 
     public function index() {
+        if ($this->session->get('logged')!==TRUE) {
+            $url = base_url('login');
+            header("Location: $url");
+            exit(0);
+        }
         $model = new Brand_model();
 
         $data = array(
