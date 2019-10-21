@@ -190,7 +190,7 @@
             </li>
             <li class="nav-item nav-category">Transaksi</li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/forms/basic_elements.html">
+              <a class="nav-link" href="<?= base_url('transaksi') ?>">
                 <i class="menu-icon typcn typcn-shopping-bag"></i>
                 <span class="menu-title">Kasir</span>
               </a>
@@ -204,13 +204,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/tables/basic-table.html">
+              <a class="nav-link" href="<?= base_url('brand') ?>">
                 <i class="menu-icon typcn typcn-bell"></i>
                 <span class="menu-title">Brand</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/icons/font-awesome.html">
+              <a class="nav-link" href="<?= base_url('item') ?>">
                 <i class="menu-icon typcn typcn-user-outline"></i>
                 <span class="menu-title">Item</span>
               </a>
@@ -222,7 +222,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/icons/font-awesome.html">
+              <a class="nav-link" href="<?= base_url('supplier') ?>">
                 <i class="menu-icon typcn typcn-user-outline"></i>
                 <span class="menu-title">Supplier</span>
               </a>
