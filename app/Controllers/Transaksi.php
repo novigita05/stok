@@ -23,9 +23,8 @@ class Transaksi extends BaseController {
     {
         header('Content-Type:application/json');
         $list = $this->db->table('transaksi')
-                         ->join('item', 'item.id_item = transaksi.id_transaksi')
+                         ->join('item', 'item.id_item = transaksi.item_id_item')
                          ->get()->getResult();
-
 
         $data = array();
         $content = array();

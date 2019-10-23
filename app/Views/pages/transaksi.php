@@ -71,6 +71,7 @@
               <tr>
                 <th scope="col" class="border-0 text-center">No</th>
                  <th scope="col" class="border-0">Kode Transaksi</th>
+                 <th scope="col" class="border-0">No Transaksi</th>
                 <th scope="col" class="border-0">Nama Item</th>
                 <th scope="col" class="border-0">Harga</th>
                 <th scope="col" class="border-0">Jumlah</th>
@@ -88,9 +89,9 @@
 </div>
 <script type="text/javascript">
   $(function () {
-    console.log($('#label').text())
 
     dt_url = "<?php echo base_url('transaksi/get_json') ?>";
+    console.log(dt_url)
     dt_columns = [
       {"data" : "id_transaksi"},
       {"data" : "kode"},
