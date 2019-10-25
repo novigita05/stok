@@ -15,7 +15,7 @@
         <div class="card-header border-bottom d-flex">
           <h6 class="m-0">List <?= $menu ?></h6>
             <div class="ml-auto">
-              <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal_supplier"> Tambah <?= $menu ?></button>
+              <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal_barangkeluar"> Tambah <?= $menu ?></button>
             </div>
         </div>
         <div class="card-body p-0 pb-3 text-center">
@@ -24,8 +24,9 @@
               <tr>
                 <th scope="col" class="border-0 text-center">No</th>
                 <th scope="col" class="border-0">Nama</th>
-                <th scope="col" class="border-0">Telepon</th>
-                <th scope="col" class="border-0">Alamat</th>
+                <th scope="col" class="border-0">Tanggal</th>
+                <th scope="col" class="border-0">Stok Keluar</th>
+                <th scope="col" class="border-0">Deskripsi</th>
                 <th scope="col" class="border-0">Aksi</th>
               </tr>
             </thead>
@@ -38,7 +39,7 @@
     <!-- End Users Stats -->
   </div>
 </div>
-<div id="modal_supplier" class="modal fade" role="dialog">
+<div id="modal_barangkeluar" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -56,19 +57,25 @@
               Nama
             </div>
             <div class="col-lg-8">
-              <input type="text" class="form-control" name="nama_supplier">
+              <input type="text" class="form-control" name="nama">
             </div>
             <div class="col-lg-4">
-              Telepon
+              Tanggal
             </div>
             <div class="col-lg-8">
-              <input type="text" class="form-control" name="telp">
+              <input type="date" class="form-control" name="tanggal">
             </div>
             <div class="col-lg-4">
-              Alamat
+              Stok Keluar
             </div>
             <div class="col-lg-8">
-              <input type="text" class="form-control" name="alamat">
+              <input type="text" class="form-control" name="stok_keluar">
+            </div>
+            <div class="col-lg-4">
+              Deskripsi
+            </div>
+            <div class="col-lg-8">
+              <input type="text" class="form-control" name="deskripsi">
             </div>
           </div>
         </div>
@@ -83,12 +90,14 @@
 </div>
 <script type="text/javascript">
   $(function () {
-    dt_url = "<?php echo base_url('supplier/get_json') ?>";
+    dt_url = "<?php echo base_url('barang_keluar/get_json') ?>";
+    console.log(dt_url)
     dt_columns = [
-      {"data" : "id_supplier"},
-      {"data" : "nama_supplier"},
-      {"data" : "telp"},
-      {"data" : "alamat"},
+      {"data" : "id_bkeluar"},
+      {"data" : "nama"},
+      {"data" : "tanggal"},
+      {"data" : "stok_keluar"},
+      {"data" : "deskripsi"},
       {"data" : "aksi"}
     ];
   })
