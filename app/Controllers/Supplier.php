@@ -10,11 +10,11 @@ use App\Models\Supplier_model;
 class Supplier extends BaseController {
 
     public function index() {
-        if ($this->session->get('logged')!==TRUE) {
-            $url = base_url('login');
-            header("Location: $url");
-            exit(0);
-        }
+        //if ($this->session->get('logged')!==TRUE) {
+            //$url = base_url('login');
+            //header("Location: $url");
+            //exit(0);
+        //}
         $model = new Supplier_model();
 
         $data = array(
@@ -32,12 +32,12 @@ class Supplier extends BaseController {
         $content = array();
         foreach($list as $key => $value){
             $data['id_supplier'] = $value->id_supplier;
-            $data['nama'] = $value->nama;
+            $data['nama_supplier'] = $value->nama_supplier;
             $data['telp'] = $value->telp;
             $data['alamat'] = $value->alamat;
         
             $edit = '<button type="button" class="btn btn-icon btn-primary mr-1" onclick="load_modal(`ubah`,`supplier`, `'.$value->id_supplier.'`, ``)">edit</button>';
-            $hapus = '<button type="button" class="btn btn-icon btn-danger mr-1" onclick="load_modal(`hapus`, `supplier`, `'.$value->id_supplier.'`, `'.$value->nama.'`, `'.$value->telp.'`, `'.$value->alamat.'`)">delete</button>';
+            $hapus = '<button type="button" class="btn btn-icon btn-danger mr-1" onclick="load_modal(`hapus`, `supplier`, `'.$value->id_supplier.'`, `'.$value->nama_supplier.'`, `'.$value->telp.'`, `'.$value->alamat.'`)">delete</button>';
         
             $data['aksi'] = $edit.$hapus;
             array_push($content, $data);
