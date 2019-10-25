@@ -216,7 +216,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/icons/font-awesome.html">
+              <a class="nav-link" href="<?= base_url('karyawan') ?>">
                 <i class="menu-icon typcn typcn-user-outline"></i>
                 <span class="menu-title">Karyawan</span>
               </a>
@@ -236,13 +236,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/tables/basic-table.html">
+              <a class="nav-link" href="<?= base_url('barang_masuk') ?>">
                 <i class="menu-icon typcn typcn-bell"></i>
                 <span class="menu-title">Pemasukan</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/icons/font-awesome.html">
+              <a class="nav-link" href="<?= base_url('barang_keluar') ?>">
                 <i class="menu-icon typcn typcn-user-outline"></i>
                 <span class="menu-title">Pengeluaran</span>
               </a>
