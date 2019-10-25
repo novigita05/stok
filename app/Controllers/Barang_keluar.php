@@ -25,7 +25,6 @@ class Barang_keluar extends BaseController
 		header('Content-Type:application/json');
 		$list = $this->db->table('barang_keluar')
 					 	 ->join('item', 'item.id_item = barang_keluar.item_id_item')
-					 	 ->join('transaksi', 'transaksi.id_transaksi = barang_keluar.transaksi_id_transaksi')
 					 	 ->get()->getResult();
 
 		$data = array();

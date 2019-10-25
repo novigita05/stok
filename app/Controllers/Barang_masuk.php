@@ -25,7 +25,6 @@ class Barang_masuk extends BaseController {
         $list = $this->db->table('barang_masuk')
                          ->join('item', 'item.id_item = barang_masuk.item_id_item')
                          ->join('supplier', 'supplier.id_supplier = barang_masuk.supplier_id_supplier')
-                         ->join('transaksi' , 'transaksi.id_transaksi = barang_masuk.transakasi_id_transaksi')
                          ->get()->getResult();
         $data = array();
         $content = array();
