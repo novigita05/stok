@@ -13,7 +13,8 @@ class Transaksi extends BaseController {
         $model = new Transaksi_model();
 
         $data = array(
-            'transaksi' => $model->getTransaksi(),
+            'no_transaksi' => $this->get_no_transaksi(),
+            'item' => $this->db->table('item')->get()->getResult(),
             'menu' => 'transaksi',
             'view' => 'pages/transaksi',
         );
@@ -63,5 +64,28 @@ class Transaksi extends BaseController {
         }else{
             echo "gagal";
         }
+    }
+    public function get_no_transaksi()
+    {
+        $last_no = $this->db->table('transaksi')->limit(1)->orderBy('no_transaksi','desc')->get()->getRow();
+        if (isset($last_no->no_transaksi)) {
+            $no = substr($last_no->no_transaksi, -4);
+            $date = substr($last_no->no_transaksi, 0,6);
+            if ($date !== date('ymd')) {
+                $no = '0001';
+            }else{
+                $no = $no + 1;
+                if (strlen($no)===1) {
+                    $no = '000'.$no;
+                }else if (strlen($no)===2) {
+                    $no = '00'.$no;
+                }else if (strlen($no)===3) {
+                    $no = '0'.$no;
+                }
+            }
+        }else{
+            $no = '0001';
+        }
+        return date('ymd').$no;
     }
 }
