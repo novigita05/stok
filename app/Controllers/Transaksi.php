@@ -46,24 +46,26 @@ class Transaksi extends BaseController {
     }
     public function cu_transaksi()
     {
-        $id = $this->request->getPost('id');
-        $data = $this->request->getPost();
-        $arr = array();
-        foreach ($data as $key => $value) {
-            if ($value!=="") {
-                $arr[$key] = $value;
+        $data = array(
+            'no_transaksi' => $this->request->getPost('no_transaksi'), 
+            'tanggal' => $this->request->getPost('tanggal'), 
+            'nama_pembeli' => $this->request->getPost('nama'), 
+            'telp' => $this->request->getPost('telp'), 
+            'total' => $this->request->getPost('total'), 
+            'bayar' => $this->request->getPost('bayar'), 
+            'kembalian' => $this->request->getPost('kembalian') 
+        );
+        $this->db->table('transaksi')->insert($data);
+        $id = $this->db->insertID();
+        if ($id) {
+            $detail = $this->request->getPost('detail');
+            foreach ($detail as $key => $value) {
+                $value['id_transaksi'] = $id;
+                $this->db->table('detail_transaksi')->insert($value);
             }
-        }
-        if ($id!==null || $id!=="") {
-            $this->db->table('transaksi')->insert($arr);
-        }else{
-            $this->db->table('transaksi')->update($arr,'id_transaksi = '.$id);
-        }
-        if ($this->db->affectedRows() > 0) {
             echo "sukses";
-        }else{
-            echo "gagal";
         }
+        
     }
     public function get_no_transaksi()
     {

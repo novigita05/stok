@@ -20,7 +20,7 @@
                     No. Transaksi
                   </div>
                   <div class="col-lg-8">
-                    <input type="text" class="form-control" name="no_transaksi" readonly="" value="<?= $no_transaksi ?>">
+                    <input type="text" class="form-control" id="no_transaksi" name="no_transaksi" readonly="" value="<?= $no_transaksi ?>">
                   </div>
                 </div>
                 <div class="row  ml-2 mt-2">
@@ -28,7 +28,7 @@
                     Nama
                   </div>
                   <div class="col-lg-8">
-                    <input type="text" class="form-control" name="nama">
+                    <input type="text" class="form-control" id="nama" name="nama">
                   </div>
                 </div>
                 
@@ -39,7 +39,7 @@
                     Tanggal
                   </div>
                   <div class="col-lg-8">
-                    <input type="text" class="form-control" name="tanggal" readonly="" value="<?= date('Y-m-d') ?>">
+                    <input type="text" class="form-control" id="tanggal" name="tanggal" readonly="" value="<?= date('Y-m-d') ?>">
                   </div>
                 </div>
                 <div class="row  ml-2 mt-2">
@@ -47,7 +47,7 @@
                     No.Telepon
                   </div>
                   <div class="col-lg-8">
-                    <input type="text" class="form-control" name="telp">
+                    <input type="text" class="form-control" id="telp" name="telp">
                   </div>
                 </div>
               </div>  
@@ -157,6 +157,7 @@
 <script type="text/javascript">
   var list_item = <?= json_encode($item) ?>;
   var arr_item = [];
+  var arr_beli = {};
   var total = 0;
     
   $(document).ready(function() {
@@ -176,6 +177,7 @@
     });
     $('#select_item').select2();
     $('#select_item').on('change',function () {
+      var arr = [];
       $("#select_item option:selected").attr('disabled','disabled')
       var id_item = $('#select_item').select2('data')[0].id;
       var item = arr_item[id_item];
@@ -190,6 +192,13 @@
           </tr>
       `;
       $('tbody').append(content)
+      arr_beli[id_item] = {
+        'id_item' : id_item,
+        'jumlah' : 0,
+        'harga' : item.harga_pasang,
+        'total' : 0
+      };
+      console.log(arr_beli)
     });
     $('#text_bayar').on('keyup',function () {
       var bayar = $(this).val();
@@ -204,37 +213,41 @@
     $('#text_total').text(total);
     $('#tr_'+id).remove();
     $("#select_item option[value=" + id + "]").removeAttr('disabled');
+    delete arr_beli[id];
   }
   function count_jml(id,harga) {
-    var jml = $('#jml_'+id).val()*harga;
+    var jumlah = $('#jml_'+id).val();
+    var jml = jumlah*harga;
     total = total+jml;
     $('#text_'+id).text(jml);
     $('#text_total').text(total);
+    arr_beli[id]['jumlah'] = jumlah;
+    arr_beli[id]['total'] = jml;
   }
   function fun_selesai() {
-    for (var i = 0; i < arr_item.length; i++) {
-      console.log($('#text_'+i).text())
+    var data = {
+      nama : $('#nama').val(),
+      no_transaksi : $('#no_transaksi').val(),
+      tanggal : $('#tanggal').val(),
+      telp : $('#telp').val(),
+      total : $('#text_total').text(),
+      bayar : $('#text_bayar').val(),
+      kembalian : $('#text_kembalian').text(),
+      detail : arr_beli,
     }
-    // $.ajax({
-    //   url: "<?= base_url('transaksi/simpan/') ?>", 
-    //   type: "POST", 
-    //   data: form_data,
-    //   contentType: false,
-    //   processData: false,
-    //   success: function(data)    
-    //   {
-    //     // console.log(data)
-    //     if (data=="sukses") {
-    //       $('#form_done').prop('hidden',false)
-    //       $('#form_not').prop('hidden',true)
-    //       $('#btn_selesai').prop('hidden',false)
-    //       $('#btn_daftar').prop('hidden',true)
-    //       $('#btn_batal').prop('hidden',true)
-    //     }else{
-    //       alert('data gagal')
-    //     }
-    //   }
-    // });
+    $.ajax({
+      url: "<?= base_url('transaksi/cu_transaksi/') ?>", 
+      type: "POST", 
+      data: data,
+      success: function(data)    
+      {
+        if (data == 'sukses') {
+          location.reload()
+        }else{
+          alert(data)
+        }
+      }
+    });
 
     // console.log('wkwk')
     // $('#txt_total').text($('#text_total').text());
