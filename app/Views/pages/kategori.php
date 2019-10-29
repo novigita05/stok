@@ -23,6 +23,7 @@
             <thead class="bg-light">
               <tr>
                 <th scope="col" class="border-0 text-center">No</th>
+                 <th scope="col" class="border-0">Kode Kategori</th>
                 <th scope="col" class="border-0">Kategori</th>
                 <th scope="col" class="border-0">Aksi</th>
               </tr>
@@ -47,9 +48,15 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <form id="form" data-menu='<?= $menu ?>'>
-        <input type="hidden" name="id">
+        <input type="hidden" name="id" id="id">
         <div class="modal-body">
           <div class="row">
+            <div class="col-lg-4">
+              Kode 
+            </div>
+            <div class="col-lg-8">
+              <input type="text" class="form-control" name="kode">
+            </div>
             <div class="col-lg-4">
               Kategori 
             </div>
@@ -64,16 +71,42 @@
         </div>
       </form>
     </div>
-
+    
   </div>
 </div>
 <script type="text/javascript">
   $(function () {
+    console.log($('#label').text())
+
     dt_url = "<?php echo base_url('kategori/get_json') ?>";
     dt_columns = [
       {"data" : "id_kategori"},
+      {"data" : "kode"},
       {"data" : "kategori"},
       {"data" : "aksi"}
     ];
   })
+
+  //$(document).ready(function() {
+    //$('#load_modal').click(function() {
+      //return confirm("Are you sure you want to delete?");
+    //});
+  //});
+
+  //function hapus(id)
+  //{
+    //if(confirm('Are you sure delete this data?'))
+    //{
+      //$.ajax({
+        //url : "<?php //echo base_url('kategori/hapus') ?>";
+        //type : "POST",
+        //success: function(data)
+        //{
+          //$('modal_kategori').modal('hide');
+          //reload_table();
+        //},
+
+      //})
+    //}
+  //}
 </script>
