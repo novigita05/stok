@@ -89,7 +89,9 @@
               Nama Supplier
             </div>
             <div class="col-lg-8">
-              <input type="text" class="form-control" name="nama_supplier">
+              <select type="text" class="form-control" name="nama_supplier"></select>
+                <option value="">
+                </option>
             </div>
           </div>
         </div>

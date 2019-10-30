@@ -10,11 +10,12 @@ use App\Models\Item_model;
 class Item extends BaseController {
 
     public function index() {
-        if ($this->session->get('logged')!==TRUE) {
-            $url = base_url('login');
-            header("Location: $url");
-            exit(0);
-        }
+        //if ($this->session->get('logged')!==TRUE) {
+            //$url = base_url('login');
+            //header("Location: $url");
+            //exit(0);
+        //}
+        
         $model = new Item_model();
 
         $data = array(

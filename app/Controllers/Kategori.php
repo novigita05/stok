@@ -10,11 +10,12 @@ use App\Models\Kategori_model;
 class Kategori extends BaseController {
 
     public function index() {
-        if ($this->session->get('logged')!==TRUE) {
-            $url = base_url('login');
-            header("Location: $url");
-            exit(0);
-        }
+        //if ($this->session->get('logged')!==TRUE) {
+            //$url = base_url('login');
+            //header("Location: $url");
+            //exit(0);
+        //}
+
         $model = new Kategori_model();
 
         $data = array(
@@ -27,10 +28,11 @@ class Kategori extends BaseController {
     
     public function edit($id)
     {
-        $text1 = $this->request->getPost('text1');
-        $text2 = $this->request->getPost('text2');
+        $kode = $this->request->getPost('kode');
+        $kategori = $this->request->getPost('kategori');
         $arr = array(
-            'kategori' => $text1
+            'kode' => $kode,
+            'kategori' => $kategori
         );
         // echo "$text1 - $text2";
         $this->db->table('kategori')->update($arr,'id_kategori = '.$id);
@@ -48,10 +50,11 @@ class Kategori extends BaseController {
         $content = array();
         foreach($list as $key => $value){
             $data['id_kategori'] = $value->id_kategori;
+            $data['kode'] = $value->kode;
             $data['kategori'] = $value->kategori;
         
             $edit = '<button type="button" class="btn btn-icon btn-primary mr-1" onclick="load_modal(`ubah`,`kategori`, `'.$value->id_kategori.'`, ``)">edit</button>';
-            $hapus = '<button type="button" class="btn btn-icon btn-danger mr-1" onclick="load_modal(`hapus`, `kategori`, `'.$value->id_kategori.'`, `'.$value->kategori.'`)">delete</button>';
+            $hapus = '<button type="button" class="btn btn-icon btn-danger mr-1" onclick="load_modal(`hapus`, `kategori`, `'.$value->id_kategori.'`, `'.$value->kode.'`, `'.$value->kategori.'`)">delete</button>';
         
             $data['aksi'] = $edit.$hapus;
             
@@ -60,13 +63,17 @@ class Kategori extends BaseController {
         echo json_encode($content);
     }
 
-    public function hapus($id){
-        $data=array(
-            'kategori' => $kategori
-        );
+    public function delete(){
+        $id = $this->request->getPost('id');
+        $data = $this->request->getPost();
+        foreach ($data as $key => $value) {
+            if ($value!=="") {
+                $arr[$key] = $value;
+            }
+        }
 
-        $this->db->delete('kategori', $data);
-        if($this->db->affectedRows() > 0){
+        $this->db->table('kategori')->delete()($arr,'id_kategori = '.$id);
+        if ($this->db->affectedRows() > 0) {
             echo "sukses";
         }else{
             echo "gagal";

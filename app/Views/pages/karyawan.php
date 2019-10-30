@@ -15,8 +15,7 @@
         <div class="card-header border-bottom d-flex">
           <h6 class="m-0">List <?= $menu ?></h6>
             <div class="ml-auto">
-              <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal_stok"> + Tambah Stok </button>
-              <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal_item"> + Tambah <?= $menu ?></button>
+              <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal_karyawan"> Tambah <?= $menu ?></button>
             </div>
         </div>
         <div class="card-body p-0 pb-3 text-center">
@@ -24,13 +23,11 @@
             <thead class="bg-light">
               <tr>
                 <th scope="col" class="border-0 text-center">No</th>
-                <th scope="col" class="border-0">Kode</th>
                 <th scope="col" class="border-0">Nama</th>
-                <th scope="col" class="border-0">Harga Modal</th>
-                <th scope="col" class="border-0">Harga Jual</th>
-                <th scope="col" class="border-0">Harga pasang</th>
-                <th scope="col" class="border-0">Stok</th>
-                <th scope="col" class="border-0">Limit</th>
+                <th scope="col" class="border-0">Telepon</th>
+                <th scope="col" class="border-0">Alamat</th>
+                <th scope="col" class="border-0">Username</th>
+                <th scope="col" class="border-0">Password</th>
                 <th scope="col" class="border-0">Aksi</th>
               </tr>
             </thead>
@@ -43,7 +40,7 @@
     <!-- End Users Stats -->
   </div>
 </div>
-<div id="modal_item" class="modal fade" role="dialog">
+<div id="modal_karyawan" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -58,46 +55,34 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-lg-4">
-              Kode
-            </div>
-            <div class="col-lg-8">
-              <input type="text" class="form-control" name="kode">
-            </div>
-            <div class="col-lg-4">
               Nama
             </div>
             <div class="col-lg-8">
               <input type="text" class="form-control" name="nama">
             </div>
             <div class="col-lg-4">
-              Harga Modal
+              Telepon
             </div>
             <div class="col-lg-8">
-              <input type="text" class="form-control" name="harga_modal">
+              <input type="text" class="form-control" name="telp">
             </div>
             <div class="col-lg-4">
-              Harga Jual
+              Alamat
             </div>
             <div class="col-lg-8">
-              <input type="text" class="form-control" name="harga_sale">
+              <input type="text" class="form-control" name="alamat">
             </div>
             <div class="col-lg-4">
-              Harga pasang
+              Username
             </div>
             <div class="col-lg-8">
-              <input type="text" class="form-control" name="harga_pasang">
+              <input type="text" class="form-control" name="username">
             </div>
             <div class="col-lg-4">
-              Stok
+              Password
             </div>
             <div class="col-lg-8">
-              <input type="text" class="form-control" name="stok">
-            </div>
-            <div class="col-lg-4">
-              Limit
-            </div>
-            <div class="col-lg-8">
-              <input type="text" class="form-control" name="limit">
+              <input type="text" class="form-control" name="password">
             </div>
           </div>
         </div>
@@ -112,16 +97,14 @@
 </div>
 <script type="text/javascript">
   $(function () {
-    dt_url = "<?php echo base_url('item/get_json') ?>";
+    dt_url = "<?php echo base_url('karyawan/get_json') ?>";
     dt_columns = [
-      {"data" : "id_item"},
-      {"data" : "kode"},
+      {"data" : "id_karyawan"},
       {"data" : "nama"},
-      {"data" : "harga_modal"},
-      {"data" : "harga_sale"},
-      {"data" : "harga_pasang"},
-      {"data" : "stok"},
-      {"data" : "limit"},
+      {"data" : "telp"},
+      {"data" : "alamat"},
+      {"data" : "username"},
+      {"data" : "password"},
       {"data" : "aksi"}
     ];
   })

@@ -11,7 +11,6 @@
     <script src="../assets/vendors/js/vendor.bundle.addons.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <!-- End plugin js for this page-->
     <!-- inject:js -->
     <script src="../assets/js/shared/off-canvas.js"></script>

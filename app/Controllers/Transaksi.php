@@ -90,4 +90,14 @@ class Transaksi extends BaseController {
         }
         return date('ymd').$no;
     }
+    public function cetak_invoice($kode)
+    {
+        $transaksi = $this->db->table('transaksi')->where('no_transaksi',$kode)->get()->getRow();
+        $detail = $this->db->table('detail_transaksi')->where('id_transaksi',$transaksi->id_transaksi)->join('item','item.id_item=detail_transaksi.id_item')->get()->getResult();
+        $data = array(
+            'transaksi' => $transaksi,
+            'detail' => $detail,
+        ); 
+        echo view('cetak/cetak-invoice',$data);
+    }
 }

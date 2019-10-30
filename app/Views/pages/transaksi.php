@@ -8,7 +8,7 @@
       <div class="card card-small mb-4">
         <div class="card-header border-bottom d-flex">
           <div class="ml-auto">
-            <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal_transaksi"> Selesai </button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_selesai">Selesai</button>
           </div>
         </div>
 
@@ -56,16 +56,13 @@
                   <div class="col-lg-2">
                     Kode
                   </div>
-                  <div class="col-lg-5">
+                  <div class="col-lg-10">
                     <select class="form-control" id="select_item" name="select_item">
                       <option value="0"> Pilih item </option>
                       <?php foreach ($item as $key => $value): ?>
                         <option value="<?= $value->id_item ?>"><?= $value->kode.' - '.$value->nama ?></option>
                       <?php endforeach ?>
                     </select>
-                  </div>
-                  <div class="col-lg-2">
-                    <button type="submit" class="btn btn-primary ml-2" id="btn_tambah">Tambah</button>
                   </div>
                 </div>
               </div>          
@@ -125,30 +122,15 @@
       </div>
         <input type="hidden" name="id">
         <div class="modal-body">
-          <div class="row">
-            <div class="col-lg-4">
-              Total biaya
-            </div>
-            <div class="col-lg-8">
-              <span id="txt_total"></span>
-            </div>
-            <div class="col-lg-4">
-              Bayar
-            </div>
-            <div class="col-lg-8">
-              <span id="txt_bayar"></span>
-            </div>
-            <div class="col-lg-4">
-              Kembalian
-            </div>
-            <div class="col-lg-8">
-              <span id="txt_kembalian"></span>
-            </div>
-          </div>
+          <input type="hidden" id="kode_transaksi">
+          Apakah transaksi sudah selesai ?
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary button-confirm-save col-xl-5" id="btn_simpan">Simpan</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+          <button class="btn btn-primary" id="btn_cetak" hidden=""><i class="fa fa-download"></i>&nbsp;Cetak</button>
+          <button class="btn btn-success" id="btn_selesai" hidden=""><i class="fa fa-check-circle"></i>&nbsp;Selesai</button>
+
+          <button type="submit" class="btn btn-primary button-confirm-save col-xl-5" id="btn_simpan"> <div id="loading"></div> Selesai</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
         </div>
     </div>
 
@@ -206,6 +188,44 @@
       $('#text_kembalian').text(kembalian)
       console.log()
     })
+    $('#btn_simpan').on('click',function () {
+      $('#btn_simpan').html('')
+      $(this).append('<i class="fa fa-spinner fa-spin"></i> Loading')
+      $(this).css('pointer-events','none')
+      var data = {
+        nama : $('#nama').val(),
+        no_transaksi : $('#no_transaksi').val(),
+        tanggal : $('#tanggal').val(),
+        telp : $('#telp').val(),
+        total : $('#text_total').text(),
+        bayar : $('#text_bayar').val(),
+        kembalian : $('#text_kembalian').text(),
+        detail : arr_beli,
+      }
+      $.ajax({
+        url: "<?= base_url('transaksi/cu_transaksi/') ?>", 
+        type: "POST", 
+        data: data,
+        success: function(data)    
+        {
+          if (data == 'sukses') {
+            $('#btn_simpan').prop('hidden',true);
+            $('#btn_selesai').prop('hidden',false);
+            $('#btn_cetak').prop('hidden',false);
+            $('#kode_transaksi').val($('#no_transaksi').val());
+          }else{
+            alert(data)
+          }
+        }
+      });
+    });
+    $('#btn_selesai').on('click',function () {
+      location.reload()
+    })
+    $('#btn_cetak').on('click',function () {
+      var kode = $('#kode_transaksi').val();
+      window.open('<?= base_url('ppdb_obahma/cetak_invoice/') ?>'+kode, '_blank');
+    })
   });
   function func_hapus(id) {
     var jml = $('#text_'+id).text();
@@ -225,34 +245,9 @@
     arr_beli[id]['total'] = jml;
   }
   function fun_selesai() {
-    var data = {
-      nama : $('#nama').val(),
-      no_transaksi : $('#no_transaksi').val(),
-      tanggal : $('#tanggal').val(),
-      telp : $('#telp').val(),
-      total : $('#text_total').text(),
-      bayar : $('#text_bayar').val(),
-      kembalian : $('#text_kembalian').text(),
-      detail : arr_beli,
-    }
-    $.ajax({
-      url: "<?= base_url('transaksi/cu_transaksi/') ?>", 
-      type: "POST", 
-      data: data,
-      success: function(data)    
-      {
-        if (data == 'sukses') {
-          location.reload()
-        }else{
-          alert(data)
-        }
-      }
-    });
-
-    // console.log('wkwk')
-    // $('#txt_total').text($('#text_total').text());
-    // $('#txt_bayar').text($('#text_bayar').text());
-    // $('#txt_kembalian').text($('#text_kembalian').text());
-    // $('#modal_selesai').modal('show');
+    $('#txt_total').text($('#text_total').text());
+    $('#txt_bayar').text($('#text_bayar').val());
+    $('#txt_kembalian').text($('#text_kembalian').text());
+    $('#modal_selesai').modal('show'); 
   }
   </script>
